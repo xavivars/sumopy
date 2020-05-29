@@ -9,7 +9,9 @@ class Handler(logging.Handler):
                  host,
                  name=None,
                  compressed=False,
-                 source_name=None):
+                 source_name=None,
+                 scheme='https'
+                 ):
         """
         Similar to HTTPHandler but with some custom Sumo-friendly headers
         """
@@ -19,7 +21,8 @@ class Handler(logging.Handler):
         self.name = name
         self.compressed = compressed
         self.source_name = source_name
-        self.endpoint = 'https://{}{}'.format(self.host, self.url)
+        self.scheme = scheme
+        self.endpoint = '{}://{}{}'.format(self.scheme, self.host, self.url)
 
     def emit(self, record):
         try:
